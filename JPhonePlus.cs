@@ -86,13 +86,13 @@ namespace Module2_HW4
                     if (item == null || item == Users[index]) continue;
                     Users2[indexTmp++] = item;
                 }
-                Users = new string[Users2.Length];
+                Users = new string[5];
                 for (int i = 0; i < Users.Length; i++)
                 {
                     Users[i] = Users2[i];
                 }
                 userCount--;
-                Users2= new string[userCount-1];
+                Users2= new string[5];
                 Console.WriteLine($"{username} has been deleted");
             }
         }

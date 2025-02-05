@@ -15,6 +15,7 @@
             jPhone.CurrentUser("Zakir");
             jPhone.PrintNumberOfValidCalls();
             jPhone.DeleteAccount("User1");
+            jPhone.AddAccount("User1");
             jPhone.PrintAllAccounts();
             jPhone.PrintInfo();
 
@@ -35,6 +36,7 @@
             jPhonePro.DeleteAccount("User1");
             jPhonePro.DeleteAccount("Zakir");
             jPhonePro.DeleteAccount("User1");
+            jPhonePro.AddAccount("Zakir");
             jPhonePro.PrintAllAccounts();
             jPhonePro.PrintInfo();
         }
