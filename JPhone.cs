@@ -11,28 +11,28 @@ namespace Module2_HW4
 {
     internal class JPhone
     {
-        public string Phone = "JPhone";
-        public string[] Users =new string[3];
+        public virtual string Phone { set; get; } = "JPhone";
+        public string[] Users = new string[3];
         public string[] Users2 = new string[3];
         public string currentUser;
-        public string DeviceName {  get; set; }
-        public int MemorySize = 32;
-        public decimal Price = 999;
+        protected string ServiceTag;
+        public string DeviceName { get; set; }
+        public virtual int MemorySize { set; get; } = 32;
 
-        static int userCount = 0;
-        static int callCount = 0;
-        public JPhone(string deviceName)
+        protected int userCount = 0;
+        protected int callCount = 0;
+        public JPhone(string deviceName, string serviceTag)
         {
             DeviceName = deviceName;
-
+            ServiceTag = serviceTag;
         }
 
         public virtual string Call(string phoneNumber)
         {
-            string invalid="Invalid phone number, please check the number!";
+            string invalid = "Invalid phone number, please check the number!";
             string calling = $"Calling to the number {phoneNumber}";
-            
-            if(phoneNumber.Length >= 6 && phoneNumber.Length <= 8)
+
+            if (phoneNumber.Length >= 6 && phoneNumber.Length <= 8)
             {
                 if (phoneNumber[0] == '4' || phoneNumber[0] == '6')
                 {
@@ -51,38 +51,42 @@ namespace Module2_HW4
             if (userCount < 3)
             {
 
-                Users[userCount]=username;
+                Users[userCount] = username;
                 Console.WriteLine($"Account {username} was added");
                 userCount++;
             }
             else Console.WriteLine("You cannot add more accounts, limit is reached");
         }
 
-        public void PrintAllAccounts()
+        public virtual void PrintAllAccounts()
         {
-            if(userCount ==0) Console.WriteLine("No user accounts to display");
+            if (userCount == 0) Console.WriteLine("No user accounts to display");
             else
             {
-                foreach(string account in Users) Console.WriteLine(account); 
+                foreach (string account in Users)
+                {
+                    if (account == null) continue;
+                    Console.WriteLine(account);
+                }
             }
         }
 
         public void CurrentUser(string username)
         {
-            foreach(var item  in Users)
+            foreach (var item in Users)
             {
-                if (item==username) currentUser = username;
+                if (item == username) currentUser = username;
                 return;
             }
-            
-            
+
+
 
         }
 
         public void PrintInfo()
         {
-            Console.WriteLine($"{Phone} is called {DeviceName}, it has {MemorySize}GB of memory and {userCount} user acounts and costs {Price}$.");
-            if(currentUser!=null) Console.WriteLine($"Current user is {currentUser}");
+            Console.WriteLine($"{Phone} is called {DeviceName}, it has {MemorySize}GB of memory and {userCount} user acounts.");
+            if (currentUser != null) Console.WriteLine($"Current user is {currentUser}");
         }
 
         public void PrintNumberOfValidCalls()
@@ -90,24 +94,31 @@ namespace Module2_HW4
             Console.WriteLine($"You have made {callCount} valid calls");
         }
 
-        public void DeleteAccount(string username)
+        public virtual void DeleteAccount(string username)
         {
-            bool notAvailable = true;
-            for(int i = 0; i < Users.Length; i++)
+            int index = -1;
+            for (int i = 0; i < Users.Length; i++)
             {
                 if (Users[i] == username)
                 {
-                    notAvailable = false;
-                    Console.WriteLine("Deleted");
-                }
-                else
-                {
-                    Users2[i] = username;
+                    index = i; break;
                 }
             }
-            Users = new string[Users2.Length];
-            Users = Users2;
-            if(notAvailable) Console.WriteLine("There is no such user");
+            if (index == -1) Console.WriteLine(("No such user to delete"));
+            else
+            {
+                int indexTmp = 0;
+                foreach(var item in Users)
+                {
+                    if (item == null || item == Users[index]) continue;
+                    Users2[indexTmp++] = item;
+                }
+                Users = new string[Users2.Length];
+                for(int i=0; i < Users.Length; i++)
+                {
+                    Users[i] = Users2[i];
+                }
+            }
         }
     }
 }
