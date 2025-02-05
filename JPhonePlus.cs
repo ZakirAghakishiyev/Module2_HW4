@@ -1,4 +1,6 @@
-﻿namespace Module2_HW4
+﻿using System.Xml;
+
+namespace Module2_HW4
 {
     internal class JPhonePlus:JPhone
     {
@@ -89,6 +91,9 @@
                 {
                     Users[i] = Users2[i];
                 }
+                userCount--;
+                Users2= new string[userCount-1];
+                Console.WriteLine($"{username} has been deleted");
             }
         }
     }

@@ -87,6 +87,7 @@ namespace Module2_HW4
         {
             Console.WriteLine($"{Phone} is called {DeviceName}, it has {MemorySize}GB of memory and {userCount} user acounts.");
             if (currentUser != null) Console.WriteLine($"Current user is {currentUser}");
+            else Console.WriteLine("There is not user currently logged in");
         }
 
         public void PrintNumberOfValidCalls()
@@ -108,16 +109,20 @@ namespace Module2_HW4
             else
             {
                 int indexTmp = 0;
-                foreach(var item in Users)
+                foreach (var item in Users)
                 {
                     if (item == null || item == Users[index]) continue;
                     Users2[indexTmp++] = item;
                 }
                 Users = new string[Users2.Length];
-                for(int i=0; i < Users.Length; i++)
+                for (int i = 0; i < Users.Length; i++)
                 {
                     Users[i] = Users2[i];
                 }
+                userCount--;
+                Users2 = new string[userCount - 1];
+                Console.WriteLine($"{username} has been deleted");
+
             }
         }
     }
